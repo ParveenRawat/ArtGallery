@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
+import Navbar from "../components/navbar/Navbar";
+import AppLayout from "../components/layouts/AppLayout";
 
 function Home() {
-  return (
-    <div>Home</div>
-  )
+  return <div>This is home stuff</div>;
 }
 
-export default Home
+export default AppLayout()(Home);

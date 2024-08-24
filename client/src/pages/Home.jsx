@@ -1,5 +1,7 @@
 import React from "react";
 import Card from "../components/Card";
+import AppLayout from "../components/layouts/AppLayout";
+
 function Home() {
   return (
     <>
@@ -39,4 +41,5 @@ function Home() {
   );
 }
 
-export default Home;
+export default AppLayout()(Home);
+

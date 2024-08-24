@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound.jsx";
 // lazy loading of pages
 const Home = lazy(() => import("./pages/Home.jsx"));
 const Login = lazy(() => import("./pages/Login.jsx"));
+const Upload = lazy(() => import("./pages/Upload.jsx"));
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/about" element={<Home />} />
 
           <Route path="/login" element={<Login />} />
+          <Route path="/upload" element={<Upload />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

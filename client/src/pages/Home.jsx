@@ -1,9 +1,45 @@
 import React from "react";
-import Navbar from "../components/navbar/Navbar";
+import Card from "../components/Card";
 import AppLayout from "../components/layouts/AppLayout";
 
 function Home() {
-  return <div>This is home stuff</div>;
+  return (
+    <>
+      <section className="relative grid grid-cols-3">
+        <Card
+          srcurl="https://picsum.photos/id/237/200/300"
+          subtitle="The Subtitle"
+          title="Saitama"
+          desc="Just your favorite strongest anime character :)"
+        />
+        <Card
+          srcurl="https://dummyimage.com/600x360"
+          subtitle="The Subtitle"
+          title="Saitama"
+          desc="Just your favorite strongest anime character :)"
+        />
+        <Card
+          srcurl="https://dummyimage.com/600x360"
+          subtitle="The Subtitle"
+          title="Saitama"
+          desc="Just your favorite strongest anime character :)"
+        />
+        <Card
+          srcurl="https://dummyimage.com/600x360"
+          subtitle="The Subtitle"
+          title="Saitama"
+          desc="Just your favorite strongest anime character :)"
+        />
+        <Card
+          srcurl="https://dummyimage.com/600x360"
+          subtitle="The Subtitle"
+          title="Saitama"
+          desc="Just your favorite strongest anime character :)"
+        />
+      </section>
+    </>
+  );
 }
 
 export default AppLayout()(Home);
+

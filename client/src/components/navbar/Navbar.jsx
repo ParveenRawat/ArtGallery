@@ -1,9 +1,30 @@
 import React from "react";
+import { twMerge } from "tailwind-merge";
 import { Link } from "react-router-dom";
 
-function Navbar() {
+const navitems = [
+  {
+    itemname: "About",
+    path: "/about",
+  },
+  {
+    itemname: "Help",
+    path: "/help",
+  },
+  {
+    itemname: "Contact",
+    path: "/contact",
+  },
+  {
+    itemname: "Feedback",
+    path: "/feedback",
+  },
+];
+
+const Navbar = () => {
+  const location = window.location.href;
   return (
-    <header className="body-font text-gray-600">
+    <section className="body-font text-gray-600">
       <div className="container mx-auto flex flex-col flex-wrap items-center p-5 md:flex-row">
         <a className="title-font mb-4 flex items-center font-medium text-gray-900 md:mb-0">
           <svg
@@ -20,26 +41,31 @@ function Navbar() {
           </svg>
           <span className="ml-3 cursor-pointer text-xl">ArtGallery</span>
         </a>
-        <nav className="flex cursor-pointer flex-wrap items-center justify-center text-base md:ml-auto md:mr-auto">
-          <Link className="mr-5 hover:text-gray-900" to={"/about"}>
-            About
-          </Link>
-          <Link className="mr-5 hover:text-gray-900" to={"/help"}>
-            Help
-          </Link>
-          <Link className="mr-5 hover:text-gray-900" to={"/contact"}>
-            Contact
-          </Link>
-          <Link className="mr-5 hover:text-gray-900" to={"/feedback"}>
-            Feedback
-          </Link>
+
+        <nav className="flex cursor-pointer flex-wrap items-center justify-center gap-4 text-base md:ml-auto md:mr-auto">
+          {navitems.forEach(
+            (item) => (item.active = location.endsWith(item.path)),
+          )}
+          {navitems.map(({ itemname, path, active }) => (
+            <Link
+              className={twMerge(
+                "hover:text-gray-900",
+                active
+                  ? "border-b-2 border-blue-200 text-blue-500 transition-all" //apply style for active navitem here
+                  : "",
+              )}
+              key={path}
+              to={path}
+            >
+              {itemname}
+            </Link>
+          ))}
         </nav>
         <Link
           to={"/login"}
           className="mt-4 inline-flex items-center rounded border-0 bg-blue-100 px-3 py-1 text-base hover:bg-blue-200 focus:outline-none md:mt-0"
         >
           Login
-          {/* The bottom svg is for the right arrow*/}
           <svg
             fill="none"
             stroke="currentColor"
@@ -53,8 +79,8 @@ function Navbar() {
           </svg>
         </Link>
       </div>
-    </header>
+    </section>
   );
-}
+};
 
 export default Navbar;

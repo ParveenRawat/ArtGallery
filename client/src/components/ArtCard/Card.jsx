@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { AiFillHeart } from "react-icons/ai";
-import { FaRegComment } from "react-icons/fa6";
+import { BsChatLeftDotsFill } from "react-icons/bs";
+import { PiShareFatFill } from "react-icons/pi";
 import Like from "../CardButtons/Like";
 function Card({ srcurl, subtitle, title, desc }) {
   return (
@@ -21,12 +21,14 @@ function Card({ srcurl, subtitle, title, desc }) {
           </h1>
           <p className="leading-relaxed">{desc}</p>
         </div>
-        <div className="absolute right-0 grid grid-rows-3 gap-2 p-2">
+        <div className="absolute right-0 top-0 grid grid-rows-3 gap-3 rounded-bl-2xl rounded-tr-2xl bg-black bg-opacity-50 p-2">
+          <Like />
+
           <Link to="/login">
-            <Like />
+            <BsChatLeftDotsFill color="white" className="size-6" />
           </Link>
-          <Link to="/login">
-            <FaRegComment className="size-6" />
+          <Link>
+            <PiShareFatFill color="white" className="size-6" />
           </Link>
         </div>
       </div>

@@ -1,7 +1,8 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
 import { Link } from "react-router-dom";
-
+import { useSelector } from "react-redux";
+import Dropdown from "../DropDown/Dropdown";
 const navitems = [
   {
     itemname: "About",
@@ -23,6 +24,9 @@ const navitems = [
 
 const Navbar = () => {
   const location = window.location.href;
+
+  const { userInfo } = useSelector((state) => state.auth);
+
   return (
     <section className="body-font text-gray-600">
       <div className="container mx-auto flex flex-col flex-wrap items-center p-5 md:flex-row">
@@ -61,23 +65,27 @@ const Navbar = () => {
             </Link>
           ))}
         </nav>
-        <Link
-          to={"/login"}
-          className="mt-4 inline-flex items-center rounded border-0 bg-blue-100 px-3 py-1 text-base hover:bg-blue-200 focus:outline-none md:mt-0"
-        >
-          Login
-          <svg
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            className="ml-1 h-4 w-4"
-            viewBox="0 0 24 24"
+        {userInfo ? (
+          <Dropdown username={userInfo.name} />
+        ) : (
+          <Link
+            to={"/login"}
+            className="mt-4 inline-flex items-center rounded border-0 bg-blue-100 px-3 py-1 text-base hover:bg-blue-200 focus:outline-none md:mt-0"
           >
-            <path d="M5 12h14M12 5l7 7-7 7"></path>
-          </svg>
-        </Link>
+            Login
+            <svg
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              className="ml-1 h-4 w-4"
+              viewBox="0 0 24 24"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+          </Link>
+        )}
       </div>
     </section>
   );

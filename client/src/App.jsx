@@ -1,9 +1,10 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { Routes, BrowserRouter, Route, redirect } from "react-router-dom";
 import { lazy } from "react";
 import axios from "axios";
 import { Toaster } from "react-hot-toast";
-
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "./slices/authSlice.js";
 import LayoutLoader from "./components/layouts/Loading.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
@@ -18,6 +19,15 @@ const ProtectedRoutes = lazy(() => import("./utils/ProtectedRoutes.jsx"));
 axios.defaults.baseURL = "http://localhost:8000";
 axios.defaults.withCredentials = true;
 const App = () => {
+  const dispatch = useDispatch();
+  const { userInfo } = useSelector((state) => state.auth);
+  useEffect(() => {
+    axios.get("/profile").then((response) => {
+      if (response.data == null && userInfo) {
+        dispatch(logout());
+      }
+    });
+  }, []);
   return (
     <BrowserRouter>
       <Toaster position="bottom-right" toastOptions={{ duration: 2000 }} />

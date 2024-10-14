@@ -25,7 +25,6 @@ function Register() {
         email,
         password,
       });
-      console.log(data);
       if (data.error) {
         toast.error(data.error);
       } else {
@@ -68,7 +67,6 @@ function Register() {
           />
           <button type="submit">Submit</button>
         </form>
-        <button onClick={testToast}>testing toast</button>
       </section>
     </>
   );

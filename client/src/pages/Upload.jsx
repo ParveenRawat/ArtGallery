@@ -1,90 +1,85 @@
-import React from 'react';
-
+import { useState } from "react";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 function Upload() {
+  const navigate = useNavigate();
+  const [url, setUrl] = useState("");
+  const [title, setTitle] = useState("");
+  const [subtitle, setSubtitle] = useState("");
+  const [artist, setArtist] = useState("");
+  const [desc, setDesc] = useState("");
+
+  const uploadArt = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post("/upload", {
+        url,
+        title,
+        subtitle,
+        artist,
+        desc,
+      });
+      if (data.error) {
+        toast.error(data.error);
+      } else {
+        setUrl("");
+        setTitle("");
+        setSubtitle("");
+        setArtist("");
+        setDesc("");
+        toast.success("Uploaded Art");
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <section className="text-gray-600 body-font relative">
-      <div className="container px-5 py-24 mx-auto">
-        <div className="flex flex-col text-center w-full mb-12">
-          <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Upload Artwork</h1>
-          <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
-            Share your amazing artwork with us by uploading via URL.
-          </p>
-        </div>
-        <div className="lg:w-1/2 md:w-2/3 mx-auto">
-          <div className="flex flex-wrap -m-2">
-            <div className="p-2 w-full">
-              <div className="relative">
-                <label htmlFor="artwork-url" className="leading-7 text-sm text-gray-600">
-                  Artwork URL
-                </label>
-                <input
-                  type="url"
-                  id="artwork-url"
-                  name="artwork-url"
-                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                />
-              </div>
-            </div>
-            <div className="p-2 w-full">
-              <div className="relative">
-                <label htmlFor="artwork-title" className="leading-7 text-sm text-gray-600">
-                  Title
-                </label>
-                <input
-                  type="text"
-                  id="artwork-title"
-                  name="artwork-title"
-                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                />
-              </div>
-            </div>
-            <div className="p-2 w-full">
-              <div className="relative">
-                <label htmlFor="artwork-subtitle" className="leading-7 text-sm text-gray-600">
-                  Subtitle
-                </label>
-                <input
-                  type="text"
-                  id="artwork-subtitle"
-                  name="artwork-subtitle"
-                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                />
-              </div>
-            </div>
-            <div className="p-2 w-full">
-              <div className="relative">
-                <label htmlFor="artwork-artist" className="leading-7 text-sm text-gray-600">
-                  Artist
-                </label>
-                <input
-                  type="text"
-                  id="artwork-artist"
-                  name="artwork-artist"
-                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                />
-              </div>
-            </div>
-            <div className="p-2 w-full">
-              <div className="relative">
-                <label htmlFor="artwork-description" className="leading-7 text-sm text-gray-600">
-                  Description
-                </label>
-                <textarea
-                  id="artwork-description"
-                  name="artwork-description"
-                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
-                ></textarea>
-              </div>
-            </div>
-            <div className="p-2 w-full">
-              <button className="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
-                Add Artwork
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <>
+      <section>
+        <form onSubmit={uploadArt}>
+          <label>Artwork URL</label>
+          <input
+            type="text"
+            placeholder="Enter your art url..."
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+          />
+          <label>Title</label>
+          <input
+            type="text"
+            placeholder="Enter Title..."
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+          <label>Subtitle</label>
+          <input
+            type="text"
+            placeholder="Enter Subtitle.."
+            value={subtitle}
+            onChange={(e) => setSubtitle(e.target.value)}
+          />{" "}
+          <label>Artist</label>
+          <input
+            type="text"
+            placeholder="Artist Name.."
+            value={artist}
+            onChange={(e) => setArtist(e.target.value)}
+          />{" "}
+          <label>Description</label>
+          <input
+            type="text"
+            placeholder="Enter Description.."
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
+          />
+          <button type="submit">Submit</button>
+        </form>
+      </section>
+    </>
   );
 }
 

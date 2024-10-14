@@ -6,6 +6,8 @@ const {
   loginUser,
   getProfile,
   logoutUser,
+  getArt,
+  uploadArt
 } = require("../controllers/authController");
 // middleware
 router.use(
@@ -19,5 +21,7 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/profile", getProfile);
 router.get("/logout", logoutUser);
+router.post("/upload", uploadArt );
+router.get("/art", getArt);
 
 module.exports = router;

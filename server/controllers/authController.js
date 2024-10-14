@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Art = require("../models/art");
 const { hashPassword, comparePassword } = require("../helpers/auth");
 const jwt = require("jsonwebtoken");
 
@@ -104,4 +105,61 @@ const logoutUser = async (req, res) => {
   return res.status(200).json({ message: "User logged Out successfully" });
 };
 
-module.exports = { loginUser, registerUser, getProfile, logoutUser };
+const getArt = async (req, res) => {
+  const art = await Art.find();
+  return res.json(art);
+};
+
+// Register Endpoint
+const uploadArt = async (req, res) => {
+  try {
+    const { url, title, subtitle, artist, desc } = req.body;
+    // Check if url was entered
+    if (!url) {
+      return res.json({
+        error: "name is required",
+      });
+    }
+    if (!title) {
+      return res.json({
+        error: "title is required",
+      });
+    }
+    if (!subtitle) {
+      return res.json({
+        error: "subtitle is required",
+      });
+    }
+    if (!artist) {
+      return res.json({
+        error: "artist is required",
+      });
+    }
+    if (!desc) {
+      return res.json({
+        error: "Description is required",
+      });
+    }
+
+    // Create User in Database
+    const art = await Art.create({
+      url,
+      title,
+      subtitle,
+      artist,
+      desc,
+    });
+    return res.json(art);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = {
+  loginUser,
+  registerUser,
+  getProfile,
+  logoutUser,
+  getArt,
+  uploadArt,
+};

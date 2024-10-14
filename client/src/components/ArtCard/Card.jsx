@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { BsChatLeftDotsFill } from "react-icons/bs";
 import { PiShareFatFill } from "react-icons/pi";
 import Like from "../CardButtons/Like";
-function Card({ srcurl, subtitle, title, desc }) {
+function Card({ srcurl, title, subtitle, desc }) {
   return (
     <>
       <div className="relative m-5 h-96 items-center justify-center p-2">

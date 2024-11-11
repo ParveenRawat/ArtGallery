@@ -8,7 +8,7 @@ function Cart() {
   console.log(cartItems);
 
   const cartCards = cartItems.map((cartItem) => (
-    <Card name={cartItem.name} qty="12" />
+    <Card name={cartItem.title} quantity={cartItem.quantity} />
   ));
 
   return (

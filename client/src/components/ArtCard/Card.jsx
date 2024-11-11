@@ -8,6 +8,7 @@ import { setCartItems } from "../../slices/cartSlice";
 import axios from "axios";
 function Card({ srcurl, title, subtitle, desc }) {
   const { userInfo } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
 
@@ -17,8 +18,9 @@ function Card({ srcurl, title, subtitle, desc }) {
     const response = await axios.post("/addToCart", {
       email: userInfo.email,
       title: title,
+      quantity: 0,
     });
-    console.log(response);
+    dispatch(setCartItems({ title, subtitle, quantity: 0 }));
   };
 
   return (

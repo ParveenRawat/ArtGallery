@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 
-function Card({ name, qty }) {
+function Card({ name, quantity }) {
+  const removeItem = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <>
-      <div>
-        <div>cartCard</div>
+      <div className="grid grid-flow-col">
         <div></div>
         <div>{name}</div>
-        <div>{qty}</div>
-        <button>Delete</button>
+        <div className="grid grid-flow-col">
+          <button>-</button>
+          <span>{quantity}</span>
+          <button>+</button>
+        </div>
+        <button onClick={removeItem}>Remove</button>
       </div>
     </>
   );

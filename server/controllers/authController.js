@@ -32,6 +32,7 @@ const registerUser = async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      cart: [],
     });
     return res.json(user);
   } catch (error) {
@@ -110,7 +111,7 @@ const getArt = async (req, res) => {
   return res.json(art);
 };
 
-// Register Endpoint
+// Upload Art Endpoint
 const uploadArt = async (req, res) => {
   try {
     const { url, title, subtitle, artist, desc } = req.body;
@@ -155,6 +156,17 @@ const uploadArt = async (req, res) => {
   }
 };
 
+// add item to logged in user's cart
+const addToCart = async (req, res) => {
+  const { email, title } = req.body;
+
+  const user = await User.updateOne(
+    { email: email },
+    { $push: { cart: title } }
+  );
+  return res.json(user);
+};
+
 module.exports = {
   loginUser,
   registerUser,
@@ -162,4 +174,5 @@ module.exports = {
   logoutUser,
   getArt,
   uploadArt,
+  addToCart,
 };

@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Dropdown from "../DropDown/Dropdown";
+import { BsCart3 } from "react-icons/bs";
 const navitems = [
   {
     itemname: "About",
@@ -12,10 +13,7 @@ const navitems = [
     itemname: "Help",
     path: "/help",
   },
-  {
-    itemname: "Contact",
-    path: "/contact",
-  },
+
   {
     itemname: "Feedback",
     path: "/feedback",
@@ -65,27 +63,32 @@ const Navbar = () => {
             </Link>
           ))}
         </nav>
-        {userInfo ? (
-          <Dropdown username={userInfo.name} />
-        ) : (
-          <Link
-            to={"/login"}
-            className="mt-4 inline-flex items-center rounded border-0 bg-blue-100 px-3 py-1 text-base hover:bg-blue-200 focus:outline-none md:mt-0"
-          >
-            Login
-            <svg
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="ml-1 h-4 w-4"
-              viewBox="0 0 24 24"
-            >
-              <path d="M5 12h14M12 5l7 7-7 7"></path>
-            </svg>
+        <div className="grid grid-flow-col gap-3 items-center">
+          <Link to={"/cart"}>
+            <BsCart3 className="m-0 size-6 p-0" />
           </Link>
-        )}
+          {userInfo ? (
+            <Dropdown username={userInfo.name} />
+          ) : (
+            <Link
+              to={"/login"}
+              className="mx-0 mt-4 inline-flex items-center rounded border-0 bg-blue-100 px-3 py-1 text-base hover:bg-blue-200 focus:outline-none md:mt-0"
+            >
+              Login
+              <svg
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                className="ml-1 h-4 w-4"
+                viewBox="0 0 24 24"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+              </svg>
+            </Link>
+          )}
+        </div>
       </div>
     </section>
   );

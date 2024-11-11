@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect } from "react";
-import { Routes, BrowserRouter, Route, redirect } from "react-router-dom";
+import { Routes, BrowserRouter, Route } from "react-router-dom";
 import { lazy } from "react";
 import axios from "axios";
 import { Toaster } from "react-hot-toast";
@@ -13,6 +13,7 @@ const Home = lazy(() => import("./pages/Home.jsx"));
 const Login = lazy(() => import("./pages/Login.jsx"));
 const Register = lazy(() => import("./pages/Register.jsx"));
 const Upload = lazy(() => import("./pages/Upload.jsx"));
+const Cart = lazy(() => import("./pages/Cart.jsx"));
 const Dashboard = lazy(() => import("./pages/Dashboard.jsx"));
 const ProtectedRoutes = lazy(() => import("./utils/ProtectedRoutes.jsx"));
 
@@ -37,7 +38,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
 
           {/* These are not made yet change as per need */}
-          <Route path="/contact" element={<Home />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/feedback" element={<Home />} />
           <Route path="/help" element={<Home />} />
           <Route path="/about" element={<Home />} />

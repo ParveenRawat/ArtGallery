@@ -17,7 +17,7 @@ function Home() {
 
   const artCards = artItems.map((artItem) => (
     <Card
-      key={artItem.url}
+      key={artItem._id}
       srcurl={artItem.url}
       title={artItem.title}
       subtitle={artItem.subtitle}

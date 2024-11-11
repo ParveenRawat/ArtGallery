@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
   },
   password: String,
+  cart: Array,
 });
 
 const UserModel = mongoose.model("User", userSchema);

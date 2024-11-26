@@ -4,23 +4,19 @@ import { BsChatLeftDotsFill } from "react-icons/bs";
 import { PiShareFatFill } from "react-icons/pi";
 import Like from "../CardButtons/Like";
 import { useSelector, useDispatch } from "react-redux";
-import { setCartItems } from "../../slices/cartSlice";
+import { addToCart } from "../../slices/cartSlice";
 import axios from "axios";
 function Card({ srcurl, title, subtitle, desc }) {
-  const { userInfo } = useSelector((state) => state.auth);
-  const { cartItems } = useSelector((state) => state.cart);
-
-  const dispatch = useDispatch();
-
-  const addCartItem = async (e) => {
-    e.preventDefault();
-    // dispatch(setCartItems({ product_id: 123, name: title }));
-    const response = await axios.post("/addToCart", {
-      email: userInfo.email,
-      title: title,
-      quantity: 0,
-    });
-    dispatch(setCartItems({ title, subtitle, quantity: 0 }));
+  // Function to handle adding an item to the cart
+  const handleAddToCart = () => {
+    dispatch(
+      addToCart({
+        srcurl,    // Pass the image URL
+        title,     // Pass the title as the unique identifier
+        subtitle,  // Include subtitle for more details
+        desc,      // Include the description
+      })
+    );
   };
 
   return (
@@ -49,13 +45,12 @@ function Card({ srcurl, title, subtitle, desc }) {
           <Link>
             <PiShareFatFill color="white" className="size-6" />
           </Link>
-          {userInfo ? (
-            <button className="text-white" onClick={addCartItem}>
-              Add
-            </button>
-          ) : (
-            <div></div>
-          )}
+          <button
+            className="mt-2 bg-blue-500 text-white px-3 py-1 rounded"
+            onClick={handleAddToCart}
+          >
+            Add to Cart
+          </button>
         </div>
       </div>
     </>

@@ -156,17 +156,6 @@ const uploadArt = async (req, res) => {
   }
 };
 
-// add item to logged in user's cart
-const addToCart = async (req, res) => {
-  const { email, title, quantity } = req.body;
-
-  const user = await User.updateOne(
-    { email: email },
-    { $push: { cart: { title, quantity } } }
-  );
-  return res.json(user);
-};
-
 module.exports = {
   loginUser,
   registerUser,
@@ -174,5 +163,4 @@ module.exports = {
   logoutUser,
   getArt,
   uploadArt,
-  addToCart,
 };

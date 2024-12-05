@@ -1,14 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { removeFromCart, updateQuantity, clearCart } from "../slices/cartSlice";
+import { setCart, removeFromCart, updateQuantity, clearCart } from "../slices/cartSlice";
 import Card from "../components/CartCard/Card";
-
+import axios from 'axios'
 const Cart = () => {
   const { cartItems } = useSelector((state) => state.cart);
+  const { userInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  const handleRemove = (title) => {
-    dispatch(removeFromCart({ title }));
+  const getCart = async () => {
+    const response = await axios.post("/cart", { email: userInfo.email })
+    console.log(response)
+    dispatch(setCart(response.data))
+  }
+
+  useEffect(() => {
+    if (userInfo) getCart()
+  }, [])
+
+
+
+  const handleRemove = async (title) => {
+    if (userInfo) {
+      const response = await axios.delete("/removefromcart", {
+        data:
+        {
+          email: userInfo.email,
+          title: title
+        }
+      })
+      getCart()
+      console.log(response)
+    } else {
+      dispatch(removeFromCart({ title }));
+    }
   };
 
   const handleQuantityChange = (title, quantity) => {

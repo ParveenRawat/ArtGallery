@@ -156,6 +156,48 @@ const uploadArt = async (req, res) => {
   }
 };
 
+const getCartItems = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    return res.json(user.cart);
+  } catch (error) {
+    return res.json(error);
+  }
+};
+
+// Add/Update item in cart
+const updateCart = async (req, res) => {
+  const { email, title, quantity, srcurl, subtitle, desc } = req.body;
+
+  const user = await User.findOne({ email });
+  if (!user) return res.status(404).json({ message: "User not found" });
+
+  const cartItemIndex = user.cart.findIndex((item) => item.title === title);
+  
+
+  if (cartItemIndex >= 0) {
+    // Update quantity if item exists
+    user.cart[cartItemIndex].quantity++;
+  } else {
+    // Add new item
+    user.cart.push({ title, quantity, srcurl, subtitle, desc });
+  }
+  await user.save();
+  return res.json(user.cart);
+};
+// remove an item from user's database
+const removeFromCart = async (req, res) => {
+  const { title, email } = req.body;
+
+  const user = await User.findOne({ email });
+  if (!user) return res.status(404).json({ message: "User not found" });
+
+  user.cart = user.cart.filter((item) => item.title !== title);
+  await user.save();
+  return res.json(user.cart);
+};
+
 module.exports = {
   loginUser,
   registerUser,
@@ -163,4 +205,7 @@ module.exports = {
   logoutUser,
   getArt,
   uploadArt,
+  getCartItems,
+  updateCart,
+  removeFromCart
 };

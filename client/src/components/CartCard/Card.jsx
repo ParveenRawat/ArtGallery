@@ -2,12 +2,20 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../slices/cartSlice";
 
-function Card({ srcurl, title, subtitle, desc }) {
+const Card = ({ srcurl, title, subtitle, desc }) => {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    
 
     const handleAddToCart = () => {
-        dispatch(addToCart({ title, subtitle, desc, srcurl }));
+        dispatch(
+            addToCart({
+                srcurl,    // Image URL
+                title,     // Unique identifier
+                subtitle,  // Subtitle
+                desc,      // Description
+            })
+        );
     };
 
     return (

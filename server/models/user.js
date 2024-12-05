@@ -10,7 +10,10 @@ const userSchema = new mongoose.Schema({
   password: String,
   cart: [
     {
+      srcurl: String,
       title: String,
+      subtitle: String,
+      desc: String,
       quantity: Number,
     },
   ],

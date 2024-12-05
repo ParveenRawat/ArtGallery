@@ -7,18 +7,34 @@ import { useSelector, useDispatch } from "react-redux";
 import { addToCart } from "../../slices/cartSlice";
 import axios from "axios";
 function Card({ srcurl, title, subtitle, desc }) {
+  const { cartItems } = useSelector((state) => state.cart);
+  const { userInfo } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+
   // Function to handle adding an item to the cart
-  const handleAddToCart = () => {
-    dispatch(
-      addToCart({
+  const handleAddToCart = async () => {
+    if (userInfo) {
+      const response = await axios.post("/updatecart", {
+        email: userInfo.email,
         srcurl,    // Pass the image URL
         title,     // Pass the title as the unique identifier
         subtitle,  // Include subtitle for more details
-        desc,      // Include the description
+        desc,
+        quantity: 1      // Include the description
       })
-    );
-  };
-
+      
+    } else {
+      dispatch(
+        addToCart({
+          srcurl,    // Pass the image URL
+          title,     // Pass the title as the unique identifier
+          subtitle,  // Include subtitle for more details
+          desc,      // Include the description
+        })
+      )
+    }
+  }
   return (
     <>
       <div className="relative m-5 h-96 items-center justify-center p-2">

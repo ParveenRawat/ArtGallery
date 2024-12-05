@@ -8,6 +8,9 @@ const {
   logoutUser,
   getArt,
   uploadArt,
+  getCartItems,
+  updateCart,
+  removeFromCart,
 } = require("../controllers/authController");
 // middleware
 router.use(
@@ -23,5 +26,8 @@ router.get("/profile", getProfile);
 router.get("/logout", logoutUser);
 router.post("/upload", uploadArt);
 router.get("/art", getArt);
+router.post("/cart", getCartItems);
+router.post("/updatecart", updateCart);
+router.delete("/removefromcart", removeFromCart)
 
 module.exports = router;
